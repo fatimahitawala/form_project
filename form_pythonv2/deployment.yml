@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pythonform-deployment
+  labels:
+    app: pythonform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pythonform
+  template:
+    metadata:
+      labels:
+        app: pythonform
+    spec:
+      containers:
+      - name: python-form
+        image: f7660392/miniproject:v3
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: python-storage
+            mountPath: /app/data/
+      volumes:
+        - name: python-storage
+          persistentVolumeClaim:
+            claimName: python-app-pvc
+
+
+
+
